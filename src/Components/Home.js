@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import ArtistForm from './ArtistForm';
 import LocationForm from './LocationForm';
+import SpotifyLogin from './SpotifyLogin';
 
 const SONGKICK_API_KEY = '24Y5aerN5Jt1R4Cw';
+
+const SPOTIFY_SCOPES = 'user-read-private user-read-email user-read-playback-state';
+const SPOTIFY_CLIENT_ID = '10ce4e475a8e4dcea44fcb4914259e39';
+const SPOTIFY_CLIENT_SECRET = '7b0f4443d24d4af19b5d3883910b056c';
+const SPOTIFY_REDIRECT_URI = 'http://localhost:3000/callback'
 
 class Home extends Component {
   state = {
@@ -45,10 +52,8 @@ class Home extends Component {
       console.log(data);
       this.setState({events: data.resultsPage.results.event});
       this.props.history.push({pathname: '/events', state:{events: this.state.events}});
-
     }
   }
-
 
   render() {
     return (
@@ -56,7 +61,7 @@ class Home extends Component {
         <p> Playlist Maker </p>
         <ArtistForm getArtist={this.getArtist}/>
         <LocationForm getLocation={this.getLocation}/>
-
+        <SpotifyLogin />
       </div>
     );
   }
