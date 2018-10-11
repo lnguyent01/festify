@@ -20,7 +20,7 @@ class SpotifyLogin extends Component {
   render() {
     return (
       <div>
-          <button onClick={this.getSpotifyLogin}>Login to Spotify</button>
+          
       </div>
     );
   }

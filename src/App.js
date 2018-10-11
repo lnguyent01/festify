@@ -15,7 +15,7 @@ class App extends Component {
           <div>
             <Route path='/' component={Home} exact />
             <Route path='/events' component={Events}/>
-            <Route path='/login' component={SpotifyLogin}/>
+            
           </div>
         </Router>
       </div>
