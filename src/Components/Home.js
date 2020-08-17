@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import queryString from 'query-string'; 
 import ArtistForm from './ArtistForm';
 import LocationForm from './LocationForm';
 import SpotifyLogin from './SpotifyLogin';
@@ -14,12 +15,18 @@ const SPOTIFY_REDIRECT_URI = 'http://localhost:3000/callback'
 class Home extends Component {
   state = {
     redirectToEventsPage: false,
-    events: undefined
+    events: undefined,
+    spotify_access_token: ''
   }
 
   getArtist = async (e) => {
     e.preventDefault();
     const artist = e.target.elements.artist.value;
+    let parsed_access = queryString.parse(window.location.search);
+    let access_token = parsed_access.access_token;
+
+    this.setState({spotify_access_token: access_token});
+
     if (artist === '') {
       alert('Artist name is required')
     }
@@ -28,7 +35,7 @@ class Home extends Component {
       const data = await api_call.json();
       this.setState({events: data.resultsPage.results.event});
       console.log(this.state.events);
-      this.props.history.push({pathname: '/events', state:{events: this.state.events}});
+      this.props.history.push({pathname: '/events', state:{events: this.state.events, spotify_access_token: this.state.spotify_access_token}});
     }
   }
 
